@@ -5,5 +5,4 @@ RSpec.describe Birdcat, type: :model do
   it { should have_many(:birdcats) }
   it { should have_many(:birdcatnames) }
   it { should have_many(:birds) }
-  it { should validate_presence_of(:birdcatnames) }
 end

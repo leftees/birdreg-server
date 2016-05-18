@@ -3,4 +3,5 @@ class Birdcatname < ActiveRecord::Base
   belongs_to :birdcat
   validates_presence_of :lang
   validates_presence_of :name
+  validates_presence_of :birdcat
 end

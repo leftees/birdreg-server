@@ -3,5 +3,4 @@ class Birdcat < ActiveRecord::Base
   has_many :birdcats
   has_many :birdcatnames
   has_many :birds
-  validates_presence_of :birdcatnames
 end
