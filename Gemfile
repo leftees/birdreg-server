@@ -41,3 +41,4 @@ group :development do
 end
 
 gem "active_model_serializers", '~> 0.10'
+gem "codeclimate-test-reporter", group: :test, require: nil
