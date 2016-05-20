@@ -6,6 +6,6 @@ class Birdname < ActiveRecord::Base
   validates_presence_of :bird
 
   def self.find_name_by_lang(bird_id:, lang:)
-    Birdname.where(lang_id: Lang.find_id_by_name(lang)).where(bird_id: bird_id).first
+    Birdname.where(lang_id: Lang.find_ids_by_name(lang)).where(bird_id: bird_id).first
   end
 end

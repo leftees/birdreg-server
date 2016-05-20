@@ -3,7 +3,7 @@ class Lang < ActiveRecord::Base
   has_many :birdcatnames
   validates_presence_of :name
 
-  def self.find_id_by_name(lang_name)
-    Lang.find_by_name(lang_name).id
+  def self.find_ids_by_name(lang_name)
+    Lang.where(name: lang_name).select(:id)
   end
 end
