@@ -5,4 +5,10 @@ class Bird < ActiveRecord::Base
   has_many :observation_items
   has_many :observations, :through => :observation_items
   validates_presence_of :birdcat
+
+  def name(lang:)
+    bn = Birdname.find_name_by_lang(bird_id: self.id, lang: lang)
+    return nil if !bn
+    bn.name
+  end
 end
