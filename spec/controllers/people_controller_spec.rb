@@ -12,7 +12,7 @@ RSpec.describe PeopleController, type: :controller do
         people << first_person
         people << create(:person, id: 6)
         get :index
-        expect(jsonapi.data[0]._id).to eq(first_person.id.to_s)
+        expect(jsonapi.data[0]._id).to eq(first_person.id)
         expect(jsonapi.data[0].name).to eq(first_person.name)
       end
     end

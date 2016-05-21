@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :birdcats
   resources :people
   resources :places
+  resources :observations
 end

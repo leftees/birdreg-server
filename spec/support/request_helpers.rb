@@ -16,7 +16,7 @@ module Requests
       class JsonApiData
         def initialize(json)
           @data = { 
-            "_id" => json['id'], 
+            "_id" => json['id'].to_i, 
             "_type" => json['type'] 
           }
           if json && json['attributes']
@@ -53,7 +53,7 @@ module Requests
         def [](key_index_or_object)
           if key_index_or_object.kind_of?(ActiveRecord::Base)
             obj_id = key_index_or_object.id
-            obj_type = key_index_or_object.class.name.tableize
+            obj_type = key_index_or_object.class.name.tableize.dasherize
             return @list["#{obj_type}:#{obj_id}"]
           elsif key_index_or_object.kind_of?(Integer)
             return @list_array[key_index_or_object]
