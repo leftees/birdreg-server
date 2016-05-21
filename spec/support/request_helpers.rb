@@ -15,9 +15,12 @@ module Requests
     class JsonApi
       class JsonApiData
         def initialize(json)
-          @data = {}
-          if json['data'] && json['data']['attributes']
-            @data.merge!(json['data']['attributes'])
+          @data = { 
+            "_id" => json['id'], 
+            "_type" => json['type'] 
+          }
+          if json && json['attributes']
+            @data.merge!(json['attributes'])
           end
         end
         
@@ -34,29 +37,34 @@ module Requests
         end
       end
       
-      class JsonApiIncluded
-        def initialize(json)
-          @included = Hash.new({})
-          if json['included']
-            json['included'].each do |incl| 
-              @included["#{incl['type']}:#{incl['id']}"] = JsonApiData.new({"data" => incl})
+      class JsonApiList
+        def initialize(json_array)
+          @list = Hash.new({})
+          @list_array = []
+          if json_array
+            json_array.each do |incl| 
+              data = JsonApiData.new(incl)
+              @list["#{incl['type']}:#{incl['id']}"] = data
+              @list_array << data
             end
           end
         end
         
-        def [](key_or_object)
-          if key_or_object.kind_of?(ActiveRecord::Base)
-            obj_id = key_or_object.id
-            obj_type = key_or_object.class.name.tableize
-            return @included["#{obj_type}:#{obj_id}"]
+        def [](key_index_or_object)
+          if key_index_or_object.kind_of?(ActiveRecord::Base)
+            obj_id = key_index_or_object.id
+            obj_type = key_index_or_object.class.name.tableize
+            return @list["#{obj_type}:#{obj_id}"]
+          elsif key_index_or_object.kind_of?(Integer)
+            return @list_array[key_index_or_object]
           else
-            @included[key]
+            return @list[key]
           end
         end
         
         def method_missing(name, *args)
           if name.to_s[/^(\s)_(\d)$/]
-            return @included["#{$1}:${$2}"]
+            return @list["#{$1}:${$2}"]
           else
             super
           end
@@ -65,8 +73,12 @@ module Requests
       
       def initialize(json)
         @json = json
-        @jsonapidata = JsonApiData.new(@json)
-        @jsonapiincluded = JsonApiIncluded.new(@json)
+        if @json['data'].kind_of?(Array)
+          @jsonapidata = JsonApiList.new(@json['data'])
+        else
+          @jsonapidata = JsonApiData.new(@json['data'])
+        end
+        @jsonapiincluded = JsonApiList.new(@json['included'])
       end
       
       def data
