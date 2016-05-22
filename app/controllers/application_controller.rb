@@ -19,4 +19,15 @@ class ApplicationController < ActionController::Base
     meta.merge!(extra)
     meta
   end
+  
+  def generic_paginate(resource:)
+    if params[:show_all]
+      resource = resource.paginate(page: 1, per_page: 2**31)
+    elsif params[:page]
+      resource = resource.paginate(per_page: params[:page][:size], page: params[:page][:number])
+    else
+      resource = resource.paginate(page: 1, per_page: 30)
+    end
+    resource
+  end
 end
