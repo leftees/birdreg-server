@@ -43,3 +43,4 @@ end
 gem "active_model_serializers", '~> 0.10'
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem 'rack-cors', :require => 'rack/cors'
+gem "will_paginate", '~> 3.1.0'
