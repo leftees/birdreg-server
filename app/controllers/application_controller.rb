@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   
   def meta_attributes(resource:, extra: {})
     meta = {}
-    meta.merge!({ pagination: pagination_attributes(resource: resource) })
+    meta[:pagination] = pagination_attributes(resource: resource)
     meta.merge!(extra)
     meta
   end
