@@ -10,3 +10,7 @@ class BirdcatSerializer < ActiveModel::Serializer
   end
 end
 
+class TopBirdcatSerializer < BirdcatSerializer
+  has_many :birdcats
+end
+
