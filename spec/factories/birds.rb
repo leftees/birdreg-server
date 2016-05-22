@@ -3,8 +3,8 @@ FactoryGirl.define do
     association :birdcat, factory: [:birdcat]
     trait :named do
       after :build do |b| 
-        b.birdnames << create(:birdname_en)
-        b.birdnames << create(:birdname_sv)
+        b.birdnames << create(:birdname_en, bird: b)
+        b.birdnames << create(:birdname_sv, bird: b)
       end
     end
     

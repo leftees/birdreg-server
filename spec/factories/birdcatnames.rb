@@ -17,7 +17,6 @@ FactoryGirl.define do
     
     trait :swedish do
       association :lang, factory: [:lang_sv]
-      birdcat
       name { generate :bcn_name_sv }
     end
     

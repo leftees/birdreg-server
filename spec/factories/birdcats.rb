@@ -3,8 +3,8 @@ FactoryGirl.define do
 
     trait :named do
       after :build do |b| 
-        b.birdcatnames << create(:birdcatname_en)
-        b.birdcatnames << create(:birdcatname_sv)
+        b.birdcatnames << create(:birdcatname_en, birdcat: b)
+        b.birdcatnames << create(:birdcatname_sv, birdcat: b)
       end
     end
 
