@@ -1,6 +1,9 @@
 class BirdsController < ApplicationController
   def index
-    birds = Bird.all
+    birds = Bird
+            .preload(birdnames: :lang)
+            .preload(birdcat: :parent)
+            .preload(birdcat: {birdcatnames: :lang})
     birds = generic_paginate(resource: birds)
     render json: birds, include: 'birdcat', meta: meta_attributes(resource: birds)
   end
