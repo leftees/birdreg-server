@@ -4,9 +4,18 @@ class Birdcat < ActiveRecord::Base
   has_many :birdcatnames
   has_many :birds
 
-  def name(lang:)
+  def name(lang: nil)
+    if !lang
+      return names_hash
+    end
     bcn = Birdcatname.find_name_by_lang(birdcat_id: self.id, lang: lang)
     return nil if !bcn
     bcn.name
+  end
+
+  def names_hash
+    langs = birdcatnames.map(&:lang).map(&:name)
+    names = birdcatnames.map(&:name)
+    Hash[langs.zip(names)]
   end
 end
