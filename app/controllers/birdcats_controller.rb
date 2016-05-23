@@ -1,10 +1,10 @@
 class BirdcatsController < ApplicationController
   def index
      birdcats = Birdcat
-               .preload(birdcatnames: :lang)
-               .preload(parent: {birdcatnames: :lang})
-               .preload(birdcats: {birdcatnames: :lang})
-               .preload(birdcats: :parent)
+                .preload(birdcatnames: :lang)
+                .preload(parent: {birdcatnames: :lang})
+                .preload(birdcats: {birdcatnames: :lang})
+                .preload(birdcats: :parent)
     serializer = BirdcatSerializer
     included = 'parent'
     if params[:level] == "top"
