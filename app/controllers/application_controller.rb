@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
       next: resource.next_page,
       prev: resource.previous_page,
       pages: resource.total_pages,
-      records: resource.count
+      records: resource.count,
+      needs_pagination: (resource.total_pages > 1)
     }
   end
   
