@@ -100,7 +100,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.after :suite do
-    if ENV['CODECLIMATE_REPO_TOKEN'] == 'dummy'
+    if ENV['SHOW_COVERAGE_DETAILS'] && ENV['CODECLIMATE_REPO_TOKEN'] == 'dummy'
       ccparser = CCParser.new
       ccparser.coverage_summary
       ccparser.run_summary

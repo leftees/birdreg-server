@@ -13,6 +13,18 @@ RSpec.describe ObservationsController, type: :controller do
     @observation.observation_items << @observation_item1
     @observation.observation_items << @observation_item2
   end
+  
+  describe "index" do
+    it "should return a paginated list of observations" do
+      get :index
+      expect(Time.parse(jsonapi.data[0].stamp).to_i).to eq(@observation.stamp.to_i)
+      expect(Time.parse(jsonapi.data[0].estamp).to_i).to eq(@observation.estamp.to_i)
+      expect(jsonapi.included[@observation.place]._id).to eq(@observation.place_id)
+      expect(jsonapi.included[@person1]._id).to eq(@person1.id)
+      expect(jsonapi.included[@observation_item1.bird]._id).to eq(@bird1.id)
+    end
+  end
+  
   describe "show" do
     context "observation" do
       it "should return an observation with place, people, observation items and birds" do

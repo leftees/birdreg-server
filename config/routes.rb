@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :people
   resources :places
   resources :observations
+  resources :observation_items, :path => '/observation-items'
 end
