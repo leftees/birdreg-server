@@ -8,21 +8,25 @@ RSpec.describe Birdcat, type: :model do
     it { should have_many(:birds) }
   end
 
-  context "methods" do
-    it "should fetch name from language" do
-      birdcat = create(:named_birdcat)
-      name = birdcat.birdcatnames.where(lang: Lang.find_by_name('en')).first
-      
-      expect(birdcat.name(lang: 'en')).to eq(name.name)
+  describe "name" do
+    context "with language specified" do
+      it "should fetch correct name" do
+        birdcat = create(:named_birdcat)
+        name = birdcat.birdcatnames.where(lang: Lang.find_by_name('en')).first
+        
+        expect(birdcat.name(lang: 'en')).to eq(name.name)
+      end
     end
-
-    it "should return hash of all names if no lang is specified" do
-      birdcat = create(:named_birdcat)
-      name_en = birdcat.birdcatnames.where(lang: Lang.find_by_name('en')).first
-      name_sv = birdcat.birdcatnames.where(lang: Lang.find_by_name('sv')).first
-      
-      expect(birdcat.name['en']).to eq(name_en.name)
-      expect(birdcat.name['sv']).to eq(name_sv.name)
+    
+    context "with no language specified" do
+      it "should return hash of all names" do
+        birdcat = create(:named_birdcat)
+        name_en = birdcat.birdcatnames.where(lang: Lang.find_by_name('en')).first
+        name_sv = birdcat.birdcatnames.where(lang: Lang.find_by_name('sv')).first
+        
+        expect(birdcat.name['en']).to eq(name_en.name)
+        expect(birdcat.name['sv']).to eq(name_sv.name)
+      end
     end
   end
 end

@@ -12,21 +12,25 @@ RSpec.describe Bird, type: :model do
     it { should validate_presence_of(:birdcat) }
   end
 
-  context "methods" do
-    it "should fetch name from language" do
-      bird = create(:named_bird)
-      name = bird.birdnames.where(lang: Lang.find_by_name('en')).first
-      
-      expect(bird.name(lang: 'en')).to eq(name.name)
+  describe "name" do
+    context "with language specified" do
+      it "should fetch correct name" do
+        bird = create(:named_bird)
+        name = bird.birdnames.where(lang: Lang.find_by_name('en')).first
+        
+        expect(bird.name(lang: 'en')).to eq(name.name)
+      end
     end
     
-    it "should return hash of all names if no lang is specified" do
-      bird = create(:named_bird)
-      name_en = bird.birdnames.where(lang: Lang.find_by_name('en')).first
-      name_sv = bird.birdnames.where(lang: Lang.find_by_name('sv')).first
-      
-      expect(bird.name['en']).to eq(name_en.name)
-      expect(bird.name['sv']).to eq(name_sv.name)
+    context "with no language specified" do
+      it "should return hash of all names" do
+        bird = create(:named_bird)
+        name_en = bird.birdnames.where(lang: Lang.find_by_name('en')).first
+        name_sv = bird.birdnames.where(lang: Lang.find_by_name('sv')).first
+        
+        expect(bird.name['en']).to eq(name_en.name)
+        expect(bird.name['sv']).to eq(name_sv.name)
+      end
     end
   end
 end
