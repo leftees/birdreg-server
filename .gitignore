@@ -15,6 +15,7 @@
 *~
 \#*#
 .#*
+*.orig
 
 #Ignore code climate coverage directory
 /coverage
