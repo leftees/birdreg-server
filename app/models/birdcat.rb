@@ -7,17 +7,6 @@ class Birdcat < ActiveRecord::Base
   # Twin method, used for both single name for requested language,
   # or hash of all names if no language is specified
   def name(lang: nil)
-    if !lang
-      return names_hash
-    end
-    bcn = Birdcatname.find_name_by_lang(birdcat_id: self.id, lang: lang)
-    return nil if !bcn
-    bcn.name
-  end
-
-  def names_hash
-    langs = birdcatnames.map(&:lang).map(&:name)
-    names = birdcatnames.map(&:name)
-    Hash[langs.zip(names)]
+    Lang.name_from_resource_names(resource_names: birdcatnames, lang: lang)
   end
 end
