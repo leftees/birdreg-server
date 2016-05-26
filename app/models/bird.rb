@@ -9,17 +9,6 @@ class Bird < ActiveRecord::Base
   # Twin method, used for both single name for requested language,
   # or hash of all names if no language is specified
   def name(lang: nil)
-    if !lang
-      return names_hash
-    end
-    bn = Birdname.find_name_by_lang(bird_id: self.id, lang: lang)
-    return nil if !bn
-    bn.name
-  end
-  
-  def names_hash
-    langs = birdnames.map(&:lang).map(&:name)
-    names = birdnames.map(&:name)
-    Hash[langs.zip(names)]
+    Lang.name_from_resource_names(resource_names: birdnames, lang: lang)
   end
 end
