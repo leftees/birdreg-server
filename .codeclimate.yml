@@ -8,12 +8,6 @@ engines:
     enabled: true
   duplication:
     enabled: true
-    config:
-      languages:
-      - ruby
-      - javascript
-      - php
-      - python
   eslint:
     enabled: true
   fixme:
